@@ -24,6 +24,15 @@ pipeline {
             }
         }
 
+        stage('Non-Functional Test') {
+            steps {
+                bat '''
+                    if exist result.jtl del /f /q result.jtl
+                    jmeter -n -t tests/performance/demo.jmx -l result.jtl
+                '''
+            }
+        }
+
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv("${env.SONARQUBE_SERVER}") {

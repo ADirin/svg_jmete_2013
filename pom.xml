@@ -15,6 +15,7 @@
         <spring-boot.version>3.5.7</spring-boot.version>
     </properties>
 
+    <!-- Dependency management section to control versions of dependencies  which comes later in the POM -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -86,7 +87,6 @@
         </dependency>
     </dependencies>
 
-
     <build>
         <finalName>svg_3012_jmeter</finalName>
         <plugins>
@@ -98,27 +98,6 @@
                     <source>21</source>
                     <target>21</target>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.6.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>WebApp</mainClass>
-                                </transformer>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
 
             <plugin>
@@ -142,6 +121,7 @@
                 </executions>
             </plugin>
 
+            <!-- mvn javafx:run  -> desktop app -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -150,7 +130,7 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>WebApp</mainClass>
+                            <mainClass>SVG_3012_LS_V6</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
@@ -162,7 +142,8 @@
                 </executions>
             </plugin>
 
-            <!-- mvn spring-boot:run  -> starts the web version -->
+            <!-- mvn spring-boot:run  -> web app
+                 mvn package          -> target/svg_3012_jmeter.jar (starts WebApp) -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -170,9 +151,15 @@
                 <configuration>
                     <mainClass>WebApp</mainClass>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
-            <!-- your javafx-maven-plugin stays as-is: mvn javafx:run still starts the desktop UI -->
         </plugins>
-    </build>
+    </build>            <!-- your javafx-maven-plugin stays as-is: mvn javafx:run still starts the desktop UI -->
 
 </project>

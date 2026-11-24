@@ -25,8 +25,8 @@ import java.util.Map;
  *
  * Parameters work both as query string and as form fields (application/x-www-form-urlencoded).
  */
-@RestController
-@CrossOrigin
+@RestController // methods return JSON,
+@CrossOrigin // allow browser page to call the API even though it is served from a different port (8083 vs 8080)
 @RequestMapping("/api")
 public class CalculatorController {
 

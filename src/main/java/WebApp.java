@@ -13,11 +13,11 @@ import org.springframework.context.annotation.Import;
  * whole classpath from the default package) and register the controller explicitly.
  */
 @SpringBootConfiguration
-@EnableAutoConfiguration
+@EnableAutoConfiguration // sets up the web server, JSON conversion and serving of static files automatically.
 @Import(CalculatorController.class)
 public class WebApp {
 
-    @Bean
+    @Bean //creates one UnitDao and hands it to the controller.
     UnitDao unitDao() {
         return UnitDao.fromEnvironment();
     }
